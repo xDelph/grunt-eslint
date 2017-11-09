@@ -16,6 +16,7 @@ module.exports = grunt => {
 		}
 
 		const formatter = eslint.CLIEngine.getFormatter(opts.format);
+		const baseFormatter = eslint.CLIEngine.getFormatter(opts.baseFormat || 'stylish');
 
 		if (!formatter) {
 			grunt.warn(`Could not find formatter ${opts.format}`);
@@ -46,6 +47,10 @@ module.exports = grunt => {
 
 		if (opts.outputFile) {
 			grunt.file.write(opts.outputFile, output);
+
+			if (opts.baseOutput) {
+				console.log(baseFormatter(results));
+			}
 		} else if (output) {
 			console.log(output);
 		}
